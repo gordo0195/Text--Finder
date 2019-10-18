@@ -11,22 +11,34 @@ package arbolstring;
  */
 
 
-
+import java.io.File;  
+import java.util.List;
 import java.io.FileInputStream;
+import java.io.IOException;
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+
 
 
 public class LamadaDOC  {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) {
          try{
-             XWPFDocument file = new XWPFDocument(new FileInputStream("C:\\Users\\Marco\\Dropbox\\documentos\\Indígena.docx"));
+             
+            File archivo = new File("/media/gordo-0195/MARCO/documentos/gestión restaurante.docx");
+             FileInputStream path = new FileInputStream(archivo.getAbsolutePath());
+             
+             XWPFDocument file = new XWPFDocument(path);
              XWPFWordExtractor reading = new XWPFWordExtractor(file);
-             System.out.println(reading.getText());
-         }catch(Exception e){
-             System.out.println(e);
-         }
-    
+             
+            System.out.println(reading.getText());
+            //List<XWPFParagraph> paragraphs = file.getParagraphs();*/
+            
+
+        } catch (IOException e) {
+            System.out.println(e);
+            }
+        
     
     }
 } 
