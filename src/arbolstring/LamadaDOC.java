@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *
  */
 package arbolstring;
 
@@ -11,28 +9,31 @@ package arbolstring;
  */
 
 
-import java.io.File;  
-import java.util.List;
 import java.io.FileInputStream;
 import java.io.IOException;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-
-
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.hwpf.usermodel.Paragraph;
+import org.apache.poi.hwpf.usermodel.Range;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 public class LamadaDOC  {
     public static void main(String[] args) {
-         try{
-             
-            File archivo = new File("/media/gordo-0195/MARCO/documentos/gestión restaurante.docx");
-             FileInputStream path = new FileInputStream(archivo.getAbsolutePath());
-             
-             XWPFDocument file = new XWPFDocument(path);
-             XWPFWordExtractor reading = new XWPFWordExtractor(file);
-             
-            System.out.println(reading.getText());
-            //List<XWPFParagraph> paragraphs = file.getParagraphs();*/
+        
+        
+        FileInputStream File;
+        WordExtractor extractor;
+        HWPFDocument doc;
+        
+        
+                
+        try{
+            File = new FileInputStream ("C:\\Users\\Gordo_0195\\Documents\\La Historia de Alberto Prada 1.doc");
+            doc = new HWPFDocument(File);
+            extractor = new WordExtractor(doc);
+            String texto_extraido = extractor.getText();
+            System.out.println(texto_extraido);
+            
             
 
         } catch (IOException e) {
