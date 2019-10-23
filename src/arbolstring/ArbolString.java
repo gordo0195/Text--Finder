@@ -5,6 +5,8 @@
  */
 package arbolstring;
 
+import static com.sun.javafx.fxml.expression.Expression.get;
+
 /**
  *
  * @author marco
@@ -51,6 +53,25 @@ public class ArbolString {
             PreOrden(raiz.derecha);
         }
     }
+    
+    //public String buscar(String d) {
+   // return buscar( d);
+//}
+
+public String buscar(ArbolString aux, String str) {
+    if (aux == null) {
+        return null;
+    }
+    int cmp = str.compareTo(aux.dato);
+    if (cmp < 0) {
+        return get(aux.izquierda, str);
+    } else if (cmp > 0) {
+        return get(aux.derecha, str);
+    } else {
+        return aux.dato;
+    }
+}
+    
     public static void main(String[] args) {
         
         ArbolString Arbol = new ArbolString();
@@ -60,6 +81,7 @@ public class ArbolString {
         Arbol.insertar("camello");
         Arbol.insertar("castillo");
         Arbol.PreOrden(Arbol);
+        Arbol.buscar("camello");
     }
     
 }
