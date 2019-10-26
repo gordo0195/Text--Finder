@@ -1,87 +1,150 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package arbolstring;
 
-import static com.sun.javafx.fxml.expression.Expression.get;
-
-/**
- *
- * @author marco
- */
 public class ArbolString {
-
-    /**
-     * @param args the command line arguments
-     */
-    
-    String dato;
-    ArbolString derecha, izquierda;
-    
-    public ArbolString(){
-        this.dato = "";
+ 
+    private String dato;
+    private String referencia;
+    private ArbolString izquierda;
+    private ArbolString derecha;
+    public Nodo raiz;
+ 
+    public ArbolString() {
+        this.dato = null;
+        this.referencia = null;
         this.izquierda = null;
         this.derecha = null;
+    }
+     
+    public ArbolString(String dato, String referencia) {
+        this.dato = dato;
+        this.referencia = referencia;
+        this.izquierda = null;
+        this.derecha = null;
+    }
+ 
+    public static ArbolString createTree( String content ) {
+        ArbolString bstree = new ArbolString();
+        if( content != null ) {
+            //
+            // Remove the punctuation from the content
+            //
+            content = content.replaceAll("(\\w+)\\p{Punct}(\\s|$)", "$1$2");
+            String[] words = content.split( " " );
+            bstree = new ArbolString();
+            for( int i = 0; i < words.length; i++ ) {
+                bstree.addNode( words[i], " ");
+            }
+        } 
+        return bstree;
+    }
+ 
+     
+    // As a convention, if the key to be inserted is less than the key of root
+    // node, then key is inserted in
+    // left sub-tree; If key is greater, it is inserted in right sub-tree. If it
+    // is equal, as a convention, it
+    // is inserted in right sub-tree
+    public void addNode(String dato, String referencia) {
+        if (this.dato == null) {
+            this.dato = dato;
+            this.referencia = referencia;
+        } else {
+            if (this.dato.compareTo(dato) > 0) {
+                if (this.izquierda != null) {
+                    this.izquierda.addNode(dato, referencia);
+                } else {
+                    this.izquierda = new ArbolString(dato, referencia);
+                }
+ 
+            } else {
+                if (this.derecha != null) {
+                    this.derecha.addNode(dato, referencia);
+                } else {
+                    this.derecha = new ArbolString(dato, referencia);
+                }
+ 
+            }
+        }
+    }
+     
+    public void traversePreOrder() {
+        System.out.println(this.dato+" , "+this.referencia);
+        if (this.izquierda != null) {
+            this.izquierda.traversePreOrder();
+        }
+        if (this.derecha != null) {
+            this.derecha.traversePreOrder();
+        }
+    }
+ 
+    public void traverseInOrder() {
+        if (this.izquierda != null) {
+            this.izquierda.traverseInOrder();
+        }
+        System.out.println(this.dato+" , "+this.referencia);
+        if (this.derecha != null) {
+            this.derecha.traverseInOrder();
+        }
+    }
+ 
+ 
+    public void traversePostOrder() {
+        if (this.izquierda != null) {
+            this.izquierda.traversePostOrder();
+        }
+        if (this.derecha != null) {
+            this.derecha.traversePostOrder();
+        }
+        System.out.println(this.dato+" , "+this.referencia);
+    }
+    //public ArbolString nodo = new ArbolString();
+    public String buscar(String llave){
+       
+       return buscarI(llave,raiz);
     
     }
-    public boolean esta_vacio(){
-        if(this.dato == "" && this.izquierda == null && this.derecha == null){
-            return true;
-        } return false;
-    
-    }
-   public void insertar(String dato){
-       if(this.esta_vacio()){
-           this.dato = dato;
-           this.izquierda = new ArbolString();
-           this.derecha = new ArbolString();
-       }else{
-           if(this.izquierda == null){
-               this.izquierda.insertar(dato);
-           }else{
-               this.derecha.insertar(dato);
-           }
-       }
-    }
-    
-    void PreOrden(ArbolString raiz){
-        if(!raiz.esta_vacio()){
-            System.out.println(raiz.dato);
-            PreOrden(raiz.izquierda);
-            PreOrden(raiz.derecha);
+    public  String buscarI(String str, Nodo nodo) {
+        
+        int cmp = nodo.dato.compareTo(str);
+        
+        if (raiz == null) {
+            return null;
+        }else{
+            if(nodo.dato.equals(str)){
+        
+                return dato; //dato encontrado 
+        
+            }else if (cmp < 0) {
+                 return buscarI(str, nodo.izquierda);
+                
+            } else  {
+                 return buscarI(str, nodo.derecha);
+            }
+           
         }
     }
     
-    //public String buscar(String d) {
-   // return buscar( d);
-//}
-
-public String buscar(ArbolString aux, String str) {
-    if (aux == null) {
-        return null;
-    }
-    int cmp = str.compareTo(aux.dato);
-    if (cmp < 0) {
-        return get(aux.izquierda, str);
-    } else if (cmp > 0) {
-        return get(aux.derecha, str);
-    } else {
-        return aux.dato;
-    }
-}
     
-    public static void main(String[] args) {
+     public static void main(String[] args) {
+        /**
+         * metodo principal
+         * 
+         * inserta y muestra
+         */
         
         ArbolString Arbol = new ArbolString();
         
-        Arbol.insertar("perro");
-        Arbol.insertar("gato");
-        Arbol.insertar("camello");
-        Arbol.insertar("castillo");
-        Arbol.PreOrden(Arbol);
-        Arbol.buscar("camello");
+        Arbol.addNode("perro", "entrada1");
+        Arbol.addNode("gato", "entrada2");
+        Arbol.addNode("camello", "entrada3");
+        Arbol.addNode("castillo", "entrada4");
+        Arbol.traverseInOrder();
+        Arbol.traversePostOrder();
+        Arbol.traversePreOrder();
+        
+       //Arbol.buscar("camello");
     }
     
+ 
 }
