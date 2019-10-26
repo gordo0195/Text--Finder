@@ -7,13 +7,10 @@ public class ArbolString {
     private String referencia;
     private ArbolString izquierda;
     private ArbolString derecha;
-    public Nodo raiz;
+    public ArbolString raiz;
  
     public ArbolString() {
-        this.dato = null;
-        this.referencia = null;
-        this.izquierda = null;
-        this.derecha = null;
+        this.raiz = null;
     }
      
     public ArbolString(String dato, String referencia) {
@@ -104,7 +101,7 @@ public class ArbolString {
        return buscarI(llave,raiz);
     
     }
-    public  String buscarI(String str, Nodo nodo) {
+    public  String buscarI(String str, ArbolString nodo) {
         
         int cmp = nodo.dato.compareTo(str);
         
@@ -113,7 +110,7 @@ public class ArbolString {
         }else{
             if(nodo.dato.equals(str)){
         
-                return dato; //dato encontrado 
+                return dato + "encontrado"; //dato encontrado 
         
             }else if (cmp < 0) {
                  return buscarI(str, nodo.izquierda);
