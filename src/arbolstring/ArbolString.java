@@ -101,7 +101,7 @@ public class ArbolString {
     }
     public  String buscarI(String str) {
         if(this.dato.equals(str)){
-            return dato + "  encontrada!!!";
+            return "encontrada!!! " + dato + " en: " + referencia;
         }else if(str.compareTo(this.dato) < 0){
             return izquierda == null ? null:izquierda.buscarI(str);
         
@@ -110,6 +110,39 @@ public class ArbolString {
         }
         
     }
+    public boolean existe(String seBusca ){
+    
+        if(this.dato.equals(seBusca)){
+            return true;
+        }
+        return false;
+        /**else if(seBusca.compareTo(this.dato) < 0){
+            return izquierda == null ? null:izquierda.existe(seBusca);
+        
+        }else if(seBusca.compareTo(this.dato) > 0){
+            return derecha == null ? null:derecha.existe(seBusca);
+        }
+        return "ausente";*/
+       
+    }
+    public String imprimeBusqueda(String seBusca){
+        while(this.dato != null && !" ".equals(this.dato)){//this.dato != null && 
+            Boolean está = existe(seBusca);
+            if(está == true){
+                System.out.println("encontrada! " + seBusca + " en: " + this.referencia);
+                
+            }else if(seBusca.compareTo(this.dato) < 0){
+                return izquierda == null ? null:izquierda.imprimeBusqueda(seBusca);
+        
+            }else if(seBusca.compareTo(this.dato) > 0){
+                return derecha == null ? null:derecha.imprimeBusqueda(seBusca);
+            }
+        
+        }    
+        return "ausente";
+        
+    }
+    
     
     
      public static void main(String[] args) {
@@ -126,11 +159,12 @@ public class ArbolString {
         Arbol.addNode("camello", "entrada3");
         Arbol.addNode("castillo", "entrada4");
         Arbol.traverseInOrder();
-        Arbol.traversePostOrder();
-        Arbol.traversePreOrder();
+        //Arbol.traversePostOrder();
+        //Arbol.traversePreOrder();
         
-       String str1 = (String) Arbol.buscar( "camello" );
+       String str1 = (String) Arbol.buscar( "castillo" );
        System.out.println(str1);
+       Arbol.imprimeBusqueda("la");
     }
     
  
