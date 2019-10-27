@@ -11,6 +11,10 @@ public class ArbolString {
  
     public ArbolString() {
         this.raiz = null;
+        this.dato = "";
+        this.referencia = "";
+        this.izquierda = null;
+        this.derecha = null;
     }
      
     public ArbolString(String dato, String referencia) {
@@ -23,9 +27,7 @@ public class ArbolString {
     public static ArbolString createTree( String content ) {
         ArbolString bstree = new ArbolString();
         if( content != null ) {
-            //
-            // Remove the punctuation from the content
-            //
+            
             content = content.replaceAll("(\\w+)\\p{Punct}(\\s|$)", "$1$2");
             String[] words = content.split( " " );
             bstree = new ArbolString();
@@ -37,11 +39,7 @@ public class ArbolString {
     }
  
      
-    // As a convention, if the key to be inserted is less than the key of root
-    // node, then key is inserted in
-    // left sub-tree; If key is greater, it is inserted in right sub-tree. If it
-    // is equal, as a convention, it
-    // is inserted in right sub-tree
+   
     public void addNode(String dato, String referencia) {
         if (this.dato == null) {
             this.dato = dato;
@@ -98,28 +96,19 @@ public class ArbolString {
     //public ArbolString nodo = new ArbolString();
     public String buscar(String llave){
        
-       return buscarI(llave,raiz);
+       return buscarI(llave);
     
     }
-    public  String buscarI(String str, ArbolString nodo) {
+    public  String buscarI(String str) {
+        if(this.dato.equals(str)){
+            return dato + "  encontrada!!!";
+        }else if(str.compareTo(this.dato) < 0){
+            return izquierda == null ? null:izquierda.buscarI(str);
         
-        int cmp = nodo.dato.compareTo(str);
-        
-        if (raiz == null) {
-            return null;
         }else{
-            if(nodo.dato.equals(str)){
-        
-                return dato + "encontrado"; //dato encontrado 
-        
-            }else if (cmp < 0) {
-                 return buscarI(str, nodo.izquierda);
-                
-            } else  {
-                 return buscarI(str, nodo.derecha);
-            }
-           
+            return derecha == null ? null:derecha.buscarI(str);
         }
+        
     }
     
     
@@ -140,7 +129,8 @@ public class ArbolString {
         Arbol.traversePostOrder();
         Arbol.traversePreOrder();
         
-       //Arbol.buscar("camello");
+       String str1 = (String) Arbol.buscar( "camello" );
+       System.out.println(str1);
     }
     
  
