@@ -1,10 +1,15 @@
 
 package arbolstring;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.List;
 
 public class ArbolString {
  
     private String dato;
-    private String referencia;
+    public List referencia = new ArrayList();
     private ArbolString izquierda;
     private ArbolString derecha;
     public ArbolString raiz;
@@ -12,14 +17,14 @@ public class ArbolString {
     public ArbolString() {
         this.raiz = null;
         this.dato = "";
-        this.referencia = "";
+        this.referencia.add(0, "");
         this.izquierda = null;
         this.derecha = null;
     }
-     
+    @SuppressWarnings("unchecked") 
     public ArbolString(String dato, String referencia) {
         this.dato = dato;
-        this.referencia = referencia;
+        this.referencia.add(referencia);
         this.izquierda = null;
         this.derecha = null;
     }
@@ -43,7 +48,7 @@ public class ArbolString {
     public void addNode(String dato, String referencia) {
         if (this.dato == null) {
             this.dato = dato;
-            this.referencia = referencia;
+            this.referencia.add(0, referencia);
         } else {
             if (this.dato.compareTo(dato) > 0) {
                 if (this.izquierda != null) {
@@ -64,7 +69,7 @@ public class ArbolString {
     }
      
     public void traversePreOrder() {
-        System.out.println(this.dato+" , "+this.referencia);
+        System.out.println(this.dato+" , "+this.referencia.toString());
         if (this.izquierda != null) {
             this.izquierda.traversePreOrder();
         }
@@ -77,7 +82,7 @@ public class ArbolString {
         if (this.izquierda != null) {
             this.izquierda.traverseInOrder();
         }
-        System.out.println(this.dato+" , "+this.referencia);
+        System.out.println(this.dato+" , "+this.referencia.toString());
         if (this.derecha != null) {
             this.derecha.traverseInOrder();
         }
@@ -91,7 +96,7 @@ public class ArbolString {
         if (this.derecha != null) {
             this.derecha.traversePostOrder();
         }
-        System.out.println(this.dato+" , "+this.referencia);
+        System.out.println(this.dato+" , "+this.referencia.toString());
     }
     //public ArbolString nodo = new ArbolString();
     public String buscar(String llave){
@@ -101,7 +106,7 @@ public class ArbolString {
     }
     public  String buscarI(String str) {
         if(this.dato.equals(str)){
-            return "encontrada!!! " + dato + " en: " + referencia;
+            return "encontrada!!! " + dato + " en: " + this.referencia.toString();
         }else if(str.compareTo(this.dato) < 0){
             return izquierda == null ? null:izquierda.buscarI(str);
         
@@ -129,18 +134,19 @@ public class ArbolString {
         while(this.dato != null && !" ".equals(this.dato)){//this.dato != null && 
             Boolean está = existe(seBusca);
             if(está == true){
-                System.out.println("encontrada! " + seBusca + " en: " + this.referencia);
-                
-            }else if(seBusca.compareTo(this.dato) < 0){
-                return izquierda == null ? null:izquierda.imprimeBusqueda(seBusca);
+                System.out.println("encontrada! " + seBusca + " en: " + this.referencia.toString());
+            }else{    
+                if(seBusca.compareTo(this.dato) < 0){
+                    return izquierda == null ? null:izquierda.imprimeBusqueda(seBusca);
         
-            }else if(seBusca.compareTo(this.dato) > 0){
-                return derecha == null ? null:derecha.imprimeBusqueda(seBusca);
-            }
+                }else if(seBusca.compareTo(this.dato) > 0){
+                    return derecha == null ? null:derecha.imprimeBusqueda(seBusca);
+                }
         
-        }    
+            }    
+        
+        }
         return "ausente";
-        
     }
     
     
