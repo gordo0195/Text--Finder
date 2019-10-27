@@ -20,12 +20,14 @@ public class LlamadaTXT {
     public static void main(String[] args) throws IOException{
         
         File Archivo;
+        String referencia;
         FileReader  Lector = null;
         BufferedReader Bufer;
         ArbolString Principal = new ArbolString();
         try{
-            Archivo = new File("C:\\Users\\Gordo_0195\\Documents\\proyecto taller segundo semestre\\notas.txt");
-            Lector = new FileReader(Archivo);
+            Archivo = new File("C:\\Users\\Marco\\Documents\\Charla Mediación pedagógica.txt");
+            referencia = Archivo.getName();
+            Lector = new FileReader(Archivo.getPath());
             Bufer = new BufferedReader(Lector);
             
             String Linea = Bufer.readLine();
@@ -35,15 +37,17 @@ public class LlamadaTXT {
                     
                     words[i] = words[i].replaceAll("[^\\w]", "");
                     //System.out.println(words[i]);
-                     Principal.insertar(words[i]);
+                     Principal.addNode(words[i], referencia);
                 }
             }
             
         }catch(Exception  e){
             System.out.println(e);
-        }finally{
+        }finally{//posible nullpointer 
             Lector.close();
-        }Principal.PreOrden(Principal);
+        }
+        Principal.traverseInOrder();
+        
     }
     
 }

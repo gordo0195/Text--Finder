@@ -34,7 +34,7 @@ public class LamadaPDF  {
          * lee y devuelve  cada palabra insertada en el árbol
          */
         
-        String path = "C:\\Users\\Gordo_0195\\Documents\\imagenes progra\\documentacion externa.pdf";
+        String path = "C:\\Users\\Marco\\Dropbox\\Introducción a Dropbox.pdf";
         File archivo = new File(path);
         String referencia = archivo.getName();
         ArbolString Principal = new ArbolString();
@@ -44,7 +44,7 @@ public class LamadaPDF  {
         try{            
             String texto = pdfManager.toText();
             String text = texto.toLowerCase();
-            System.out.println(text);
+            //System.out.println(text);
             String[] words = text.split("\\s+");
             
             for (int i = 0; i < words.length; i++) {
@@ -53,13 +53,13 @@ public class LamadaPDF  {
                  
             }
             
-            String temp2 = Arrays.toString(words);
+            //String temp2 = Arrays.toString(words);
             //System.out.println(temp2);
             
             int tope = words.length;
             for(int i = 0; i < tope; i++){
                 
-                Principal.insertar(words[i], referencia);
+                Principal.addNode(words[i], referencia);
                 
             
             }
@@ -69,8 +69,12 @@ public class LamadaPDF  {
            System.out.println(ex.getMessage());
         }
         
-        Principal.PreOrden(Principal);
-       
+        //Principal.traversePostOrder();
+        //String str1 = (String) Principal.buscar( "la" );
+        //System.out.println(str1);
+        //String ss = Principal.imprimeBusqueda("la");
+        Principal.imprimeBusqueda("la");
+        //System.out.println(ss);
      }
     
 }

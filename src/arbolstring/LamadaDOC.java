@@ -16,6 +16,7 @@ package arbolstring;
  */
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -40,7 +41,8 @@ public class LamadaDOC  {
          * metodo principal
          * lee y devuelve el  nodo insertaado en el arbol 
          */
-        
+        File Archivo;
+        String referencia, path;
         
         FileInputStream File;//recoge los caracteres y los almacena en memoria
         WordExtractor extractor;//interpreta los caracteres extraidos 
@@ -50,7 +52,10 @@ public class LamadaDOC  {
         
                 
         try{
-            File = new FileInputStream ("C:\\Users\\Gordo_0195\\Documents\\La Historia de Alberto Prada 1.doc");
+            path = "C:\\Users\\Marco\\Dropbox\\documentos\\El destino manifiesto existió ya desde que llegaron los primeros colonos británicos a América.doc";
+            Archivo = new File(path);
+            File = new FileInputStream (path);
+            referencia = Archivo.getName();
             doc = new HWPFDocument(File);
             extractor = new WordExtractor(doc);
             String texto_extraido = extractor.getText();
@@ -70,7 +75,7 @@ public class LamadaDOC  {
             int tope = words.length;
             for(int i = 0; i < tope; i++){//itera el arreglo y  añade cada palabra al arbol
                 
-                Principal.insertar(words[i]);
+                Principal.addNode(words[i],referencia);
                 
             
             }
@@ -81,6 +86,6 @@ public class LamadaDOC  {
             System.out.println(e);
             }
         
-        Principal.PreOrden(Principal);
+        Principal.traversePostOrder();
     }
 } 

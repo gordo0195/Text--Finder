@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import java.io.*;
 
 /**
  *
@@ -19,22 +20,43 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 public class LlamadaDocx {
     
     public static void main(String[] args) throws InvalidFormatException{
-        
+       
+        ArbolString Principal = new ArbolString(); 
+        File Archivo;
+        String referencia = "";
         XWPFWordExtractor extractor;
         XWPFDocument document;
         String texto_extraido;
         try{
-            FileInputStream file = new FileInputStream("C:\\Users\\Gordo_0195\\Documents\\La Historia de Alberto Prada.docx");
+           
+            Archivo = new File("C:\\Users\\Marco\\Dropbox\\documentos\\Indígena.docx");
+            referencia = Archivo.getName();
+            FileInputStream file = new FileInputStream(Archivo.getPath());
             document = new XWPFDocument(OPCPackage.open(file));
             extractor = new XWPFWordExtractor(document);
             texto_extraido = extractor.getText();
-            System.out.println(texto_extraido);
+            String text = texto_extraido.toLowerCase();
+            System.out.println(text);
+            String[] words = text.split("\\s+");
             
+            for (int i = 0; i < words.length; i++) {
+                
+                 words[i] = words[i].replaceAll("[^\\w]", "");
+                 
+            }
+            for(int i = 0; i < (words.length)-1; i++){
+                    
+                    words[i] = words[i].replaceAll("[^\\w]", "");
+                    //System.out.println(words[i]);
+                     Principal.addNode(words[i], referencia);
+            }
         }catch(IOException e){
             System.out.println(e);
-        }
+        }Principal.traverseInOrder();
         
         
     }
     
-}
+    }
+    
+
